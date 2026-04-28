@@ -12,7 +12,7 @@ app.use("/uploads", express.static("uploads"));
 // Auto-create uploads folder
 if (!fs.existsSync("./uploads")) fs.mkdirSync("./uploads");
 
-mongoose.connect("mongodb://127.0.0.1:27017/complaints");
+//mongoose.connect("mongodb://127.0.0.1:27017/complaints");
 
 const Complaint = mongoose.model("Complaint", {
     name: String,
