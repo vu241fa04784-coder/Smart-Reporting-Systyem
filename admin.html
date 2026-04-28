@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Admin Panel</title>
+</head>
+<body style="background:black;color:white">
+
+<h1>All Complaints 📊</h1>
+<div id="data"></div>
+
+<script>
+async function loadData(){
+    const res = await fetch("http://localhost:5000/complaints");
+    const data = await res.json();
+
+    let html = "";
+
+    data.forEach(c => {
+        html += `
+            <div style="border:1px solid white; margin:10px; padding:10px">
+                <h3>${c.name} (${c.category})</h3>
+                <p>${c.description}</p>
+                <img src="http://localhost:5000/uploads/${c.image}" width="100"/>
+            </div>
+        `;
+    });
+
+    document.getElementById("data").innerHTML = html;
+}
+
+loadData();
+</script>
+
+</body>
+</html>

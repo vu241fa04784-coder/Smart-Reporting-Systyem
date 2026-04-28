@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dark Login</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background: radial-gradient(circle at top, #0f2027, #203a43, #000000);
+}
+
+.login-box{
+    width:360px;
+    padding:25px;
+    border-radius:20px;
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(20px);
+    box-shadow: 0 0 25px rgba(0,255,255,0.2);
+    text-align:center;
+    color:#fff;
+}
+
+.login-box h2{
+    margin-bottom:15px;
+    color:#00f7ff;
+}
+
+input{
+    width:100%;
+    padding:12px;
+    margin:10px 0;
+    border:none;
+    border-radius:10px;
+    outline:none;
+    background: rgba(255,255,255,0.08);
+    color:#fff;
+}
+
+input::placeholder{
+    color:#bbb;
+}
+
+video{
+    width:100%;
+    border-radius:10px;
+    margin-top:10px;
+    border:2px solid #00f7ff;
+}
+
+.btn{
+    width:100%;
+    padding:12px;
+    margin-top:10px;
+    border:none;
+    border-radius:10px;
+    background: linear-gradient(45deg,#00f7ff,#8e2de2);
+    color:white;
+    font-size:16px;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.btn:hover{
+    transform: scale(1.05);
+    box-shadow:0 0 15px #00f7ff;
+}
+
+.neon-text{
+    color:#00f7ff;
+    text-shadow:0 0 8px #00f7ff;
+}
+</style>
+</head>
+
+<body>
+
+<div class="login-box">
+    <h2 class="neon-text">Secure Login 🔐</h2>
+
+    <form onsubmit="return loginUser()">
+        <input type="text" placeholder="Full Name" required>
+        <input type="email" placeholder="Email" required>
+        <input type="password" placeholder="Password" required>
+        <input type="text" placeholder="Native Address" required>
+
+        <!-- Camera -->
+        <video id="video" autoplay></video>
+        <canvas id="canvas" style="display:none;"></canvas>
+
+        <button type="button" class="btn" onclick="capturePhoto()">📸 Capture</button>
+        <button type="submit" class="btn">🚀 Login</button>
+    </form>
+</div>
+
+<script>
+const video = document.getElementById('video');
+const canvas = document.getElementById('canvas');
+
+// Open Camera
+navigator.mediaDevices.getUserMedia({ video: true })
+.then(stream => {
+    video.srcObject = stream;
+})
+.catch(err => {
+    alert("Camera permission denied ❌");
+});
+
+let photoCaptured = false;
+
+// Capture Photo
+function capturePhoto(){
+    const ctx = canvas.getContext('2d');
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+    ctx.drawImage(video, 0, 0);
+    photoCaptured = true;
+    alert("Photo captured ✅");
+}
+
+// Login + Redirect
+function loginUser(){
+    if(!photoCaptured){
+        alert("Please capture photo first 📸");
+        return false;
+    }
+
+    alert("Login successful 🚀");
+
+    // Redirect to dashboard
+    window.location.href = "dashboard.html";
+
+    return false;
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>File Complaint</title>
+<link rel="stylesheet" href="complaint.css">
+</head>
+
+<body>
+
+<!-- 🌐 Language -->
+<div class="top-bar">
+  <select id="languageSelect">
+    <option value="en">English</option>
+    <option value="hi">हिंदी</option>
+    <option value="te">తెలుగు</option>
+  </select>
+</div>
+
+<h1 id="title">📝 File Complaint</h1>
+<h2 id="categoryTitle"></h2>
+
+<form onsubmit="return submitForm()" class="form-box">
+
+  <input type="text" id="name" placeholder="Your Name" required>
+  <input type="number" id="age" placeholder="Age" required>
+  <input type="text" id="profession" placeholder="Profession" required>
+
+  <input type="text" id="location" placeholder="Location" required>
+  <input type="text" id="address" placeholder="Address" required>
+
+  <!-- ✅ Move inside form -->
+  <div id="extraField"></div>
+
+  <!-- Description -->
+  <div class="desc-box">
+    <textarea id="description" placeholder="Describe your complaint..." required></textarea>
+    <button type="button" onclick="startVoice()">🎤</button>
+  </div>
+
+  <!-- ✅ Add ID -->
+  <label id="uploadLabel">Upload Proof (Min 2 Photos)</label>
+  <input type="file" id="photos" multiple accept="image/*" required>
+
+  <!-- ✅ Add ID -->
+  <button type="submit" class="submit-btn" id="submitBtn">
+    Submit Complaint
+  </button>
+
+</form>
+
+<script src="complaint.js"></script>
+
+</body>
+</html>
