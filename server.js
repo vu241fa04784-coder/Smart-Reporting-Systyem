@@ -3,26 +3,16 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const multer = require("multer");
 const fs = require("fs");
-const path = require("path");
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 app.use("/uploads", express.static("uploads"));
 
-// Serve frontend
-app.use(express.static(__dirname));
-
-// Homepage route
-app.get("/", (req, res) => {
-    res.sendFile(path.join(__dirname, "index.html"));
-});
-
 // Auto-create uploads folder
 if (!fs.existsSync("./uploads")) fs.mkdirSync("./uploads");
 
-// ❌ COMMENT MongoDB for now
-// mongoose.connect("mongodb://127.0.0.1:27017/complaints");
+mongoose.connect("mongodb://127.0.0.1:27017/complaints");
 
 const Complaint = mongoose.model("Complaint", {
     name: String,
@@ -57,18 +47,21 @@ app.post("/submit", upload.single("photo"), async (req, res) => {
     }
 });
 
+app.listen(5000, () => console.log("Server running on port 5000 🚀"));
+mongoose.connect("mongodb://127.0.0.1:27017/complaints")
+.then(() => {
+    console.log("MongoDB Connected ✅");
+})
+.catch((err) => {
+    console.log("MongoDB Connection Error Details:");
+    console.error(err); // This will print the full error message
+});
+// ✅ GET ALL COMPLAINTS (Add this part)
 app.get("/complaints", async (req, res) => {
     try {
         const data = await Complaint.find().sort({ createdAt: -1 });
-        res.json(data);
+        res.json(data); // This sends the data to your browser
     } catch (error) {
         res.status(500).send("Error fetching complaints ❌");
     }
-});
-
-// ✅ Dynamic port
-const PORT = process.env.PORT || 5000;
-
-app.listen(PORT, () => {
-    console.log("Server running on port " + PORT + " 🚀");
 });
